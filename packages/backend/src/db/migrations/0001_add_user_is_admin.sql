@@ -1,0 +1,34 @@
+-- Migration: 0001_add_user_is_admin
+--
+-- Adds the `is_admin` column to the `users` table.
+--
+-- Purpose:
+--   Allows operator / founder accounts to bypass the paywall and
+--   free-trial limit without altering the subscription state machine
+--   or the Razorpay integration. The flag is consulted exclusively
+--   by `checkInterviewAccess` in the billing service; nothing else
+--   in the codebase special-cases admin users.
+--
+-- Why a boolean and not a `role` enum:
+--   Today the product has exactly two states: regular user and
+--   operator. A boolean is the smallest schema change that captures
+--   that. If a third state ever needs to be modeled, this column
+--   can be replaced with a `role` pgEnum in a follow-up migration.
+--
+-- Defaults to `false` so every existing user row picks up the
+-- standard free-tier behavior on ALTER TABLE — no backfill needed.
+-- PostgreSQL applies the DEFAULT to all existing rows as part of
+-- the same ALTER TABLE statement (this is a single transaction in
+-- PG ≥11, and the statement is metadata-only when the default is
+-- a constant, so it's effectively instant even on large tables).
+--
+-- NOT NULL is intentional: the access check has no null-handling
+-- branch, and there's no product scenario where "we don't know if
+-- this user is admin" is a sensible answer.
+--
+-- To grant a user admin access (one-off, run against prod once):
+--   UPDATE users SET is_admin = true WHERE email = '<email>';
+-- or, more robustly (emails can change in Clerk, ids cannot):
+--   UPDATE users SET is_admin = true WHERE id = 'user_<clerk_id>';
+
+ALTER TABLE "users" ADD COLUMN "is_admin" boolean NOT NULL DEFAULT false;

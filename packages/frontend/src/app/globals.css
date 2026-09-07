@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles at the root. Most styling is Tailwind utilities driven by
+ * the `neon.*` palette in tailwind.config.js; this file owns the font CSS
+ * variables, the dark-mode base, and the shared aurora/glass/shadow
+ * utilities used by the landing and interview screens. */
+
+@layer base {
+  /* Force Clerk's form internals to fit inside our glass card. Clerk
+     renders its own card and inputs with intrinsic widths that can
+     exceed the parent card; these `!important` rules lock every form
+     primitive to 100% width of the parent and turn off the default
+     `min-content` floor that flex children inherit. */
+  .cl-rootBox,
+  .cl-card,
+  .cl-form,
+  .cl-formFieldRow,
+  .cl-formField,
+  .cl-input,
+  .cl-formFieldInput,
+  .cl-formFieldInput__password,
+  .cl-socialButtonsBlockButton,
+  .cl-dividerLine,
+  .cl-alert,
+  .cl-identityPreview,
+  .cl-otpCodeFieldInput {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Clerk's social button row, form field row, and divider all use
+     flex — kill the default min-content floor so they don't push past
+     the card. */
+  .cl-formFieldRow,
+  .cl-socialButtons,
+  .cl-dividerRoot {
+    flex-shrink: 1 !important;
+  }
+  :root {
+    /* Type families wired by next/font. */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Fraunces', ui-serif, Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  /* Force the dark theme; we don't support light mode. */
+  html, body {
+    background-color: #0A0A12; /* neon-black — matches layout.tsx's bg-neon-black */
+    color: #E5E7EB;            /* neon-ink   — matches layout.tsx's text-neon-ink */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Smooth in-page anchor scroll for the nav (#features, #how,
+     #pricing). `scroll-margin-top` on each section (set on the
+     section wrappers) keeps the sticky nav from covering the
+     scroll target. */
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  /* Aggressive reset: kill every browser default that could leak through. */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  /* Visible keyboard focus everywhere — violet ring, matches the brand gradient. */
+  *:focus {
+    outline: none;
+  }
+  *:focus-visible {
+    outline: 2px solid #A855F7; /* neon-violet2 */
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Default selection — violet tint, matches the brand. */
+  ::selection {
+    background-color: rgba(168, 85, 247, 0.30); /* neon-violet2 at 30% */
+    color: #E5E7EB;
+  }
+
+  /* Headings — establish the default family. Sizing is handled by utilities. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+}
+
+@layer utilities {
+  /* Reusable type roles — paired with the design tokens. */
+  .type-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  .type-label {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  /* Aurora background — slow rotating conic gradient of violet/cyan/magenta.
+     Lives behind a <div> with overflow:hidden so the rotation doesn't break
+     the page width. The radial mask fades it out at the edges. */
+  .bg-aurora {
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      rgba(124, 58, 237, 0.85) 0deg,
+      rgba(6, 182, 212, 0.75) 90deg,
+      rgba(236, 72, 153, 0.65) 180deg,
+      rgba(124, 58, 237, 0.85) 360deg
+    );
+    filter: blur(100px) saturate(160%);
+    -webkit-mask-image: radial-gradient(circle 80% 60% at 50% 30%, black 0%, transparent 75%);
+    mask-image: radial-gradient(circle 80% 60% at 50% 30%, black 0%, transparent 75%);
+  }
+
+  /* Gradient text — the headline accent and stat numerals use this. */
+  .text-gradient-neon {
+    background: linear-gradient(135deg, #A855F7 0%, #06B6D4 50%, #EC4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 200%;
+  }
+
+  /* Static gradient text (for places where we don't want the animation). */
+  .text-gradient-neon-static {
+    background: linear-gradient(135deg, #A855F7 0%, #06B6D4 50%, #EC4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Outlined text — for the giant 01/02/03 process numerals. */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(229, 231, 235, 0.18);
+  }
+
+  /* Glass card — backdrop blur + thin luminous border, used for nav and pricing. */
+  .glass {
+    background: linear-gradient(180deg, rgba(229, 231, 235, 0.04) 0%, rgba(229, 231, 235, 0.01) 100%);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid rgba(229, 231, 235, 0.08);
+  }
+
+  .glass-strong {
+    background: linear-gradient(180deg, rgba(229, 231, 235, 0.06) 0%, rgba(229, 231, 235, 0.02) 100%);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(229, 231, 235, 0.12);
+  }
+
+  /* Neon glow — drop-shadow with the brand violet. Used on the primary CTA
+     and the Pro pricing card's outer ring. */
+  .shadow-neon-violet {
+    box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.4),
+                0 10px 30px -10px rgba(168, 85, 247, 0.6),
+                0 0 80px -20px rgba(168, 85, 247, 0.5);
+  }
+  .shadow-neon-cyan {
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.4),
+                0 10px 30px -10px rgba(6, 182, 212, 0.6),
+                0 0 80px -20px rgba(6, 182, 212, 0.5);
+  }
+  .shadow-neon-soft {
+    box-shadow: 0 0 0 1px rgba(229, 231, 235, 0.06),
+                0 20px 60px -20px rgba(0, 0, 0, 0.6),
+                0 0 40px -20px rgba(124, 58, 237, 0.3);
+  }
+
+  /* Thin luminous border for the 3D card. */
+  .border-luminous {
+    border: 1px solid rgba(229, 231, 235, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                0 0 0 1px rgba(124, 58, 237, 0.15),
+                0 30px 80px -30px rgba(124, 58, 237, 0.45);
+  }
+
+  /* Preserves 3D for children of a perspective container. */
+  .preserve-3d { transform-style: preserve-3d; }
+  .perspective-1200 { perspective: 1200px; }
+}
+
+/* Respect prefers-reduced-motion globally. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
