@@ -6,6 +6,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import { Logo } from '../../components/brand/Logo';
 import { useUser, SignInButton, UserButton } from '@clerk/nextjs';
 import { userButtonAppearance } from './userButtonAppearance';
 import { MobileMenu } from './MobileMenu';
@@ -45,7 +46,7 @@ export function AppNav() {
           className="type-display text-display-s text-gradient-neon-static transition-opacity hover:opacity-80"
           aria-label="IntervAI home"
         >
-          IntervAI
+          <Logo markSize={26} />
         </Link>
 
         <div className="hidden items-center gap-7 text-body-m text-neon-ink2 sm:flex">

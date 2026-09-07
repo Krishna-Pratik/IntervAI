@@ -18,6 +18,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useUser, UserButton } from '@clerk/nextjs';
 import clsx from 'clsx';
+import { Logo } from '../../../components/brand/Logo';
 import { MobileMenu } from '../MobileMenu';
 import { userButtonAppearance } from '../userButtonAppearance';
 
@@ -87,7 +88,7 @@ export function Nav() {
           className="type-display text-display-s text-gradient-neon-static"
           aria-label="IntervAI home"
         >
-          IntervAI
+          <Logo markSize={26} />
         </Link>
 
         <div className="hidden items-center gap-6 text-body-m text-neon-ink2 sm:flex">

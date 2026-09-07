@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./README-assets/logo.png" alt="IntervAI logo — a gradient I mark on a dark rounded tile" width="74" />
+  <img src="./README-assets/logo.png" alt="IntervAI logo — Cadence, a violet-to-cyan-to-pink waveform mark on a dark rounded tile" width="74" />
 
   <h1>IntervAI</h1>
 
@@ -68,8 +68,8 @@ Built as a strict-TypeScript monorepo — a Next.js 16 App Router frontend talki
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="./README-assets/landing.gif" alt="IntervAI landing hero — animated" width="92%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.35);"/>
-  <br/><i>Landing hero — the live-interview preview with animated waveform and scoring card (auto-plays)</i>
+  <img src="./README-assets/landing.png" alt="IntervAI landing hero — new Cadence waveform logo in the nav, live-interview preview card with scoring" width="92%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.35);"/>
+  <br/><i>Landing hero — the live-interview preview with waveform and scoring card</i>
   <br/><br/>
   <img src="./README-assets/sign-in.png" alt="IntervAI sign-in" width="92%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.35);"/>
   <br/><i>Sign-in — Clerk-backed auth</i>

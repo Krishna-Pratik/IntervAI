@@ -7,6 +7,7 @@
  */
 
 import Link from 'next/link';
+import { Logo } from '../../../components/brand/Logo';
 
 const COLUMNS = [
   {
@@ -43,7 +44,7 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="type-display text-display-s text-gradient-neon-static">
-              IntervAI
+              <Logo markSize={26} />
             </div>
             <p className="mt-3 text-body-m text-neon-ink2">
               Practice out loud.

@@ -11,6 +11,7 @@
  */
 
 import Link from 'next/link';
+import { Logo } from '../../components/brand/Logo';
 
 const COLUMNS: Array<{ title: string; links: Array<{ label: string; href: string }> }> = [
   {
@@ -68,7 +69,7 @@ export function AppFooter() {
               className="type-display inline-block text-display-s text-gradient-neon-static transition-opacity hover:opacity-80"
               aria-label="IntervAI home"
             >
-              IntervAI
+              <Logo markSize={26} />
             </Link>
             <p className="mt-3 max-w-xs text-body-m text-neon-ink2">
               AI mock interviews that speak back. Practice out loud, get

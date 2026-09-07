@@ -7,6 +7,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { Logo } from '../../components/brand/Logo';
 
 export type MobileLink = { label: string; href: string };
 
@@ -105,7 +106,7 @@ export function MobileMenu({
         >
           <div className="flex items-center justify-between border-b border-neon-glass px-5 py-4">
             <span className="type-display text-display-s text-gradient-neon-static">
-              IntervAI
+              <Logo markSize={24} />
             </span>
             <button
               type="button"

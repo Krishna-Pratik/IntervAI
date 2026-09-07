@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
+import { Logo } from '../../../../components/brand/Logo';
 import { SignUpPanel } from './SignUpPanel';
 
 export function SignUpShell() {
@@ -60,7 +61,7 @@ export function SignUpShell() {
             className="type-display text-display-s text-gradient-neon-static transition-opacity hover:opacity-80"
             aria-label="IntervAI home"
           >
-            IntervAI
+            <Logo markSize={26} />
           </Link>
         </div>
 
@@ -139,7 +140,7 @@ export function SignUpShell() {
             className="type-display text-display-m text-gradient-neon-static transition-opacity hover:opacity-80"
             aria-label="IntervAI home"
           >
-            IntervAI
+            <Logo markSize={22} />
           </Link>
         </div>
 
