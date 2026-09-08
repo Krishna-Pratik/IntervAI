@@ -22,6 +22,9 @@
 
   <br/>
 
+  <a href="https://intervai-web.vercel.app">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-%E2%86%92-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live demo" />
+  </a>
   <a href="#-installation--setup">
     <img src="https://img.shields.io/badge/Run_It_Locally-%E2%86%92-000000?style=for-the-badge&logo=terminal&logoColor=white" alt="Run locally" />
   </a>
@@ -275,17 +278,25 @@ cd packages/backend && npx tsx --test "tests/**/*.test.ts"
 
 ## ☁️ Deployment
 
-The platform is built for a modern split deployment (not yet launched — currently run locally):
+The platform runs as a live split deployment:
 
-- **Frontend → Vercel:** import the repo, set root directory to `packages/frontend`, provide the two `NEXT_PUBLIC_*` env vars.
-- **Backend → Render:** root `packages/backend`, `npm run build` → `node dist/index.js`, env vars from the table above, and point the Razorpay webhook at `/api/v1/webhooks`.
+| Piece | Where | URL |
+| --- | --- | --- |
+| **Frontend** | Vercel · `packages/frontend` root | [intervai-web.vercel.app](https://intervai-web.vercel.app) |
+| **Backend API** | Render (Singapore) · Express 5 | [intervai-backend-p5gc.onrender.com](https://intervai-backend-p5gc.onrender.com) |
+| **Database** | Neon serverless Postgres (Singapore) — pooled connection | — |
+
+- **Frontend → Vercel:** import the repo, set root directory to `packages/frontend`, provide the two `NEXT_PUBLIC_*` env vars (`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`).
+- **Backend → Render:** build `npm ci --include=dev && npm run build -w @intervai/backend`, start `node packages/backend/dist/index.js`, `NODE_ENV=production`, health check `/health`, and `FRONTEND_URL` pointed at the Vercel origin for CORS.
 - **Database:** already serverless (Neon) — connection-pooled, so a long-running or serverless API host both work unchanged.
+- **Razorpay webhook:** point it at `https://<backend>/api/v1/webhook` and set `RAZORPAY_WEBHOOK_SECRET` on the host.
 
 ## 👨‍ Author
 
 **Krishna Pratik**
 - GitHub: [@Krishna-Pratik](https://github.com/Krishna-Pratik)
 - LinkedIn: [Krishna Pratik](https://www.linkedin.com/in/krishna-pratik)
+- Live app: [intervai-web.vercel.app](https://intervai-web.vercel.app)
 - Project: [github.com/Krishna-Pratik/IntervAI](https://github.com/Krishna-Pratik/IntervAI)
 
 ---
